@@ -3,13 +3,9 @@
 #include <set>
 #include "coordinates.h"
 #include "field.h"
+#include "player.h"
 
 using std::set;
-
-class player{
-public:
-    set<piece*> pieces;
-};
 
 
 class game
@@ -22,8 +18,11 @@ public:
     set<coordinates> get_attack_cells(const coordinates src);
 
 private:
+    void switch_player(){current_player = (current_player.color == piece::white)
+                ? players[piece::black] : players[piece::white];}
     field current_field;
-    player players[2];
+    player players[2] = {player(piece::white), player(piece::black)};
+    player& current_player;
 };
 
 #endif // GAME_H

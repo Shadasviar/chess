@@ -3,21 +3,25 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.cpp \
-    test_game.cpp \
-    game.cpp \
-    field.cpp \
-    coordinates.cpp \
-    cell.cpp \
-    piece.cpp \
-    pieces/down_pawn.cpp
+INCLUDEPATH += headers/
+
+SOURCES += sources/main.cpp \
+    sources/test_game.cpp \
+    sources/game.cpp \
+    sources/field.cpp \
+    sources/coordinates.cpp \
+    sources/cell.cpp \
+    sources/piece.cpp \
+    pieces/down_pawn.cpp \
+    sources/player.cpp
 
 HEADERS += \
-    test_game.h \
-    game.h \
-    field.h \
-    coordinates.h \
-    cell.h \
-    piece.h \
-    pieces/down_pawn.h
+    headers/test_game.h \
+    headers/game.h \
+    headers/field.h \
+    headers/coordinates.h \
+    headers/cell.h \
+    headers/piece.h \
+    pieces/down_pawn.h \
+    headers/player.h
 

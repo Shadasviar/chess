@@ -11,9 +11,12 @@ public:
         place(place), current_piece(_piece){}
 
     enum cell_color{cell_white, cell_black};
+    piece* get_piece(){return current_piece;}
 
     coordinates place;
     cell_color color;
+
+private:
     piece* current_piece;
 };
 

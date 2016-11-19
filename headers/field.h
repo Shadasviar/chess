@@ -4,6 +4,7 @@
 #include "cell.h"
 #include <set>
 
+
 using std::set;
 
 
@@ -15,9 +16,12 @@ public:
     bool move(const coordinates src, const coordinates dst);
     set<coordinates> get_move_cells(const coordinates src);
     set<coordinates> get_attack_cells(const coordinates src);
+    piece* get_piece(coordinates src);
 
 private:
     cell cells[8][8];
+    void attack(coordinates, coordinates);
+    void move_to(coordinates, coordinates);
 };
 
 #endif // FIELD_H
