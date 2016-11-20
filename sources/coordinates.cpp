@@ -29,6 +29,12 @@ coordinates operator+(const coordinates &lhs, const coordinates &rhs)
 }
 
 
+coordinates operator-(const coordinates &lhs, const coordinates &rhs)
+{
+    return coordinates(lhs._x - rhs._x, lhs._y - rhs._y);
+}
+
+
 bool operator<(const coordinates &lhs, const coordinates &rhs)
 {
     if(lhs._x < rhs._x) return true;

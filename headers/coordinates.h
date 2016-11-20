@@ -15,6 +15,7 @@ public:
     void set_x(uint8_t x) throw(std::out_of_range);
     void set_y(uint8_t y) throw(std::out_of_range);
     friend coordinates operator+(const coordinates& lhs, const coordinates& rhs);
+    friend coordinates operator-(const coordinates& lhs, const coordinates& rhs);
     friend bool operator<(const coordinates& lhs, const coordinates& rhs);
 
 private:

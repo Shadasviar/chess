@@ -5,6 +5,8 @@
 
 using std::set;
 
+constexpr uint8_t PLAYERS_NUM = 2;
+
 class player
 {
 public:

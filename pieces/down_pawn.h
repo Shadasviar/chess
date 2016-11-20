@@ -13,8 +13,6 @@ public:
 
     ~down_pawn() override;
 
-private:
-    bool is_first_step = true;
 };
 
 #endif // DOWN_PAWN_H
