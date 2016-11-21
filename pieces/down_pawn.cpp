@@ -3,18 +3,28 @@
 set<coordinates> down_pawn::all_moves()
 {
     set<coordinates> res;
-    if(position.y() == 6){
-        res.insert(position - coordinates(0,2));
+    try{
+        if(position.y() == 6){
+            res.insert(position.add(0,-2));
+        }
+        res.insert(position.add(0,-1));
+    }catch(std::out_of_range& ex){
+        //catched - ok
     }
-    res.insert(position - coordinates(0,1));
+
     return res;
 }
 
 set<coordinates> down_pawn::all_attacks()
 {
     set<coordinates> res;
-    res.insert(position + coordinates(1,0) - coordinates(0,1));
-    res.insert(position - coordinates(1,1));
+    try{
+        res.insert(position.add(1,-1));
+        res.insert(position.add(-1,-1));
+    }catch(std::out_of_range& ex){
+        //ok
+    }
+
     return res;
 }
 

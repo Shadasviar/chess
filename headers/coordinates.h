@@ -17,6 +17,7 @@ public:
     friend coordinates operator+(const coordinates& lhs, const coordinates& rhs);
     friend coordinates operator-(const coordinates& lhs, const coordinates& rhs);
     friend bool operator<(const coordinates& lhs, const coordinates& rhs);
+    coordinates add(int x, int y)const throw(std::out_of_range);
 
 private:
     uint8_t _x, _y;

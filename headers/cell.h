@@ -17,7 +17,7 @@ public:
     cell_color color;
 
 private:
-    piece* current_piece;
+    piece* current_piece = nullptr;
 };
 
 #endif // CELL_H

@@ -1,10 +1,12 @@
 #include "field.h"
 #include "pieces/down_pawn.h"
 
+#define INIT_CELL(piece_obj, c, col) cell(c, new piece_obj(c, col))
+
 field::field()
 {
-    cells[1][6] = cell(coordinates(1,6), new down_pawn(coordinates(1,6),
-                                                       piece::player_color::white));
+    cells[0][6] = INIT_CELL(down_pawn, coordinates(0,6), piece::white);
+    cells[0][5] = INIT_CELL(down_pawn, coordinates(0,5), piece::black);
 }
 
 
@@ -24,6 +26,7 @@ bool field::move(const coordinates src, const coordinates dst, player players[PL
 
 set<coordinates> field::get_move_cells(const coordinates src) const
 {
+
     auto result = std::get<0>(check_diagonales(get_piece(src)->get_position(), get_piece(src)->all_moves()));
     auto tmp = std::get<0>(check_lines(get_piece(src)->get_position(), get_piece(src)->all_moves()));
     result.insert(tmp.begin(), tmp.end());
@@ -74,84 +77,29 @@ sets_of_movement field::check_diagonales(const coordinates curr, const set<coord
     set<coordinates> movement(mov), boarder_pieces;
 
     /*\up*/
-    int x = curr.x()-1, y = curr.y()-1;
-    bool remove = false;
-    while(x >= 0 && y >= 0){
-        if(remove){
-            movement.erase(coordinates(x--, y--));
-            continue;
-        }
-        if(nullptr == get_piece(coordinates(x, y))){
-            --x, --y;
-        }
-        else{
-            if(mov.count(coordinates(x,y)) > 0){
-                boarder_pieces.insert(coordinates(x,y));
-            }
-            remove = true;
-            --x, --y;
-        }
-    }
-
+    auto tmp = check_one_diag(std::tie(movement, boarder_pieces),
+                              [](int& x, int& y)->bool{return x >= 0 && y >= 0;},
+                              {curr.x()-1, curr.y()-1},
+                              [](int& x, int& y){--x; --y;}
+    );
     /*/up*/
-    x = curr.x()+1, y = curr.y()-1;
-    remove = false;
-    while(x < CELLS_NUM && y >= 0){
-        if(remove){
-            movement.erase(coordinates(x++, y--));
-            continue;
-        }
-        if(nullptr == get_piece(coordinates(x, y))){
-            ++x, --y;
-        }
-        else{
-            if(mov.count(coordinates(x,y)) > 0){
-                boarder_pieces.insert(coordinates(x,y));
-            }
-            remove = true;
-            ++x, --y;
-        }
-    }
-
+    tmp = check_one_diag(tmp,
+                              [](int& x, int& y)->bool{return x < CELLS_NUM && y >= 0;},
+                              {curr.x()+1, curr.y()-1},
+                              [](int& x, int& y){++x; --y;}
+    );
     /*\down*/
-    x = curr.x()+1, y = curr.y()+1;
-    remove = false;
-    while(x < CELLS_NUM && y < CELLS_NUM){
-        if(remove){
-            movement.erase(coordinates(x++, y++));
-            continue;
-        }
-        if(nullptr == get_piece(coordinates(x, y))){
-            ++x, ++y;
-        }
-        else{
-            if(mov.count(coordinates(x,y)) > 0){
-                boarder_pieces.insert(coordinates(x,y));
-            }
-            remove = true;
-            ++x, ++y;
-        }
-    }
-
+    tmp = check_one_diag(tmp,
+                              [](int& x, int& y)->bool{return x < CELLS_NUM && y < CELLS_NUM;},
+                              {curr.x()+1, curr.y()+1},
+                              [](int& x, int& y){++x; ++y;}
+    );
     /*/down*/
-    x = curr.x()-1, y = curr.y()+1;
-    remove = false;
-    while(x >= 0 && y < CELLS_NUM){
-        if(remove){
-            movement.erase(coordinates(x--, y++));
-            continue;
-        }
-        if(nullptr == get_piece(coordinates(x, y))){
-            --x, ++y;
-        }
-        else{
-            if(mov.count(coordinates(x,y)) > 0){
-                boarder_pieces.insert(coordinates(x,y));
-            }
-            remove = true;
-            --x, ++y;
-        }
-    }
+    tmp = check_one_diag(tmp,
+                              [](int& x, int& y)->bool{return x >= 0 && y < CELLS_NUM;},
+                              {curr.x()-1, curr.y()+1},
+                              [](int& x, int& y){--x; ++y;}
+    );
 
     return std::tie(movement, boarder_pieces);
 }
@@ -230,8 +178,41 @@ cell &field::get_cell(coordinates c)
     return cells[c.x()][c.y()];
 }
 
+
 cell_table field::get_cells() const
 {
     return cells;
+}
+
+
+sets_of_movement field::check_one_diag(sets_of_movement sets,
+        bool (*condition)(int &, int &),
+        array<int, 2> curr,
+        void (*foo)(int &, int &)) const
+{
+    auto movement = std::get<0>(sets);
+    auto boarder_pieces = std::get<1>(sets);
+    int x = curr[0], y = curr[1];
+
+    bool remove = false;
+    while(condition(x,y)){
+        if(remove){
+            movement.erase(coordinates(x, y));
+            foo(x,y);
+            continue;
+        }
+        if(nullptr == get_piece(coordinates(x, y))){
+            foo(x,y);
+        }
+        else{
+            if(movement.count(coordinates(x,y)) > 0){
+                boarder_pieces.insert(coordinates(x,y));
+                movement.erase(coordinates(x, y));
+            }
+            remove = true;
+            foo(x,y);
+        }
+    }
+    return std::tie(movement, boarder_pieces);
 }
 

@@ -36,6 +36,7 @@ private:
     sets_of_movement check_lines(const coordinates curr, const set<coordinates> mov) const;
     cell& get_cell(coordinates c);
     cell_table get_cells() const;
+    sets_of_movement check_one_diag(sets_of_movement, bool(*)(int &, int &), array<int, 2>, void(*)(int&, int&)) const;
 };
 
 #endif // FIELD_H

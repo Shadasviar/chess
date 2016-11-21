@@ -1,4 +1,5 @@
 #include "coordinates.h"
+#define NDEBUG
 #include <cassert>
 
 
@@ -20,6 +21,16 @@ void coordinates::set_y(uint8_t y)throw(std::out_of_range)
 {
     assert(y < 8);
     if(y >= 8) throw std::out_of_range("Bad coordinates");
+}
+
+coordinates coordinates::add(int x, int y) const throw(std::out_of_range)
+{
+    int8_t tmp_x(_x), tmp_y(_y);
+    try{
+        return coordinates((uint8_t)(x + tmp_x), (uint8_t)(y + tmp_y));
+    }catch(std::out_of_range& ex){
+        throw ex;
+    }
 }
 
 
