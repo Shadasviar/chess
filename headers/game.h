@@ -21,6 +21,8 @@ private:
     void switch_player(){current_player = (current_player.color == piece::white)
                 ? players[piece::black] : players[piece::white];}
 
+    bool attack(const coordinates, const coordinates);
+
     player players[PLAYERS_NUM] = {player(piece::white), player(piece::black)};
     player& current_player;
     field current_field;

@@ -1,29 +1,16 @@
 #include "field.h"
-#include "pieces/down_pawn.h"
 #include <algorithm>
 
-#define INIT_CELL(piece_obj, c, col, players) cell(c, new piece_obj(c, col));\
-players[col].pieces.insert(get_cell(c).get_piece());
-
-field::field(player players[PLAYERS_NUM])
+field::field()
 {
-    cells[0][6] = INIT_CELL(down_pawn, coordinates(0,6), piece::white, players);
-    cells[0][5] = INIT_CELL(down_pawn, coordinates(0,5), piece::black, players);
-    cells[1][5] = INIT_CELL(down_pawn, coordinates(1,5), piece::black, players);
+
 }
 
 
-bool field::move(const coordinates src, const coordinates dst, player players[PLAYERS_NUM] )
+bool field::move(const coordinates src, const coordinates dst)
 {
-    if(get_attack_cells(src).count(dst) > 0){
-        attack(src, dst, players);
-        return true;
-    }
-    if(get_move_cells(src).count(dst) > 0){
-        move_to(src, dst);
-        return true;
-    }
-    return false;
+    get_cell(src).move_piece_to(get_cell(dst));
+    return true;
 }
 
 
@@ -58,23 +45,9 @@ piece *field::get_piece(coordinates src) const
 }
 
 
-void field::attack(const coordinates src, const coordinates dst, player players[PLAYERS_NUM])
+void field::init_cell(coordinates c, piece *p)
 {
-    /*remove piece of opponent, count points etc, free cell*/
-    /*move_to(src, dst)*/
-    get_cell(dst).get_piece()->kill();
-    if(get_cell(dst).get_piece()->owner_color() == piece::white){
-        players[piece::white].pieces.erase(get_cell(dst).get_piece());
-    }else{
-        players[piece::black].pieces.erase(get_cell(dst).get_piece());
-    }
-    move_to(src, dst);
-}
-
-
-void field::move_to(const coordinates src, const coordinates dst)
-{
-    get_cell(src).move_piece_to(get_cell(dst));
+    get_cell(c).get_piece() = p;
 }
 
 

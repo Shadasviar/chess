@@ -5,7 +5,6 @@
 #include <set>
 #include <tuple>
 #include <array>
-#include "player.h"
 
 constexpr uint8_t CELLS_NUM = 8;
 
@@ -19,17 +18,16 @@ using cell_table = array<array<cell, CELLS_NUM>, CELLS_NUM>;
 class field
 {
 public:
-    field(player[PLAYERS_NUM]);
+    field();
 
-    bool move(const coordinates src, const coordinates dst, player players[PLAYERS_NUM] );
+    bool move(const coordinates src, const coordinates dst);
     set<coordinates> get_move_cells(const coordinates src) const;
     set<coordinates> get_attack_cells(const coordinates src) const;
     piece* get_piece(coordinates src) const;
+    void init_cell(coordinates c, piece* p);
 
 private:
     cell_table cells;
-    void attack(const coordinates, const coordinates, player players[PLAYERS_NUM]);
-    void move_to(const coordinates src, const coordinates dst);
 
     /*first set - cells before first piece on way, second - pieces which cut way*/
     sets_of_movement check_diagonales(const coordinates curr, const set<coordinates> mov) const;
