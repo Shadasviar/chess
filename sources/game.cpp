@@ -1,9 +1,11 @@
 #include "game.h"
+#include <algorithm>
 
-game::game():current_player(players[piece::white])
+game::game():current_player(players[piece::white]), current_field(players)
 {
 
 }
+
 
 bool game::move(const coordinates src, const coordinates dst)
 {
@@ -27,8 +29,9 @@ set<coordinates> game::get_move_cells(const coordinates src)
 
 set<coordinates> game::get_attack_cells(const coordinates src)
 {
-    auto result = current_field.get_attack_cells(src);
+    set<coordinates> result;
+    auto tmp1 = current_field.get_attack_cells(src);
     auto tmp = current_player.pieces_coordinates();
-    result.erase(tmp.begin(), tmp.end());
+    std::set_difference(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
     return result;
 }

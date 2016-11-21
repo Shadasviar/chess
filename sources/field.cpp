@@ -2,13 +2,14 @@
 #include "pieces/down_pawn.h"
 #include <algorithm>
 
-#define INIT_CELL(piece_obj, c, col) cell(c, new piece_obj(c, col))
+#define INIT_CELL(piece_obj, c, col, players) cell(c, new piece_obj(c, col));\
+players[col].pieces.insert(get_cell(c).get_piece());
 
-field::field()
+field::field(player players[PLAYERS_NUM])
 {
-    cells[0][6] = INIT_CELL(down_pawn, coordinates(0,6), piece::white);
-    cells[0][5] = INIT_CELL(down_pawn, coordinates(0,5), piece::black);
-    cells[1][5] = INIT_CELL(down_pawn, coordinates(1,5), piece::white);
+    cells[0][6] = INIT_CELL(down_pawn, coordinates(0,6), piece::white, players);
+    cells[0][5] = INIT_CELL(down_pawn, coordinates(0,5), piece::black, players);
+    cells[1][5] = INIT_CELL(down_pawn, coordinates(1,5), piece::black, players);
 }
 
 

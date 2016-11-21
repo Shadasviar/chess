@@ -19,7 +19,7 @@ using cell_table = array<array<cell, CELLS_NUM>, CELLS_NUM>;
 class field
 {
 public:
-    field();
+    field(player[PLAYERS_NUM]);
 
     bool move(const coordinates src, const coordinates dst, player players[PLAYERS_NUM] );
     set<coordinates> get_move_cells(const coordinates src) const;
