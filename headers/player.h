@@ -14,6 +14,7 @@ public:
     player(piece::player_color col = piece::white):color(col){}
 
     set<piece*> pieces;
+    set<coordinates> pieces_coordinates() const;
     piece::player_color color;
 };
 

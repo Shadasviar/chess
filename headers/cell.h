@@ -12,11 +12,11 @@ public:
 
     enum cell_color{cell_white, cell_black};
     piece*& get_piece(){return current_piece;}
-
-    coordinates place;
-    cell_color color;
+    void move_piece_to(cell dst);
 
 private:
+    coordinates place;
+    cell_color color;
     piece* current_piece = nullptr;
 };
 

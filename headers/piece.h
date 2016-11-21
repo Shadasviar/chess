@@ -21,6 +21,7 @@ public:
     void kill(){is_alive = false;}
     bool died() {return !is_alive;}
     player_color owner_color()const{return team_color;}
+    void move_to(coordinates dst){position = dst;}
 
     virtual ~piece();
 

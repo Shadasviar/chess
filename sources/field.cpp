@@ -8,6 +8,7 @@ field::field()
 {
     cells[0][6] = INIT_CELL(down_pawn, coordinates(0,6), piece::white);
     cells[0][5] = INIT_CELL(down_pawn, coordinates(0,5), piece::black);
+    cells[1][5] = INIT_CELL(down_pawn, coordinates(1,5), piece::white);
 }
 
 
@@ -72,8 +73,7 @@ void field::attack(const coordinates src, const coordinates dst, player players[
 
 void field::move_to(const coordinates src, const coordinates dst)
 {
-    get_cell(dst).get_piece() = get_piece(src);
-    get_cell(src).get_piece() = nullptr;
+    get_cell(src).move_piece_to(get_cell(dst));
 }
 
 

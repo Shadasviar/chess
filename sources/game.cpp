@@ -27,5 +27,8 @@ set<coordinates> game::get_move_cells(const coordinates src)
 
 set<coordinates> game::get_attack_cells(const coordinates src)
 {
-    return current_field.get_attack_cells(src);
+    auto result = current_field.get_attack_cells(src);
+    auto tmp = current_player.pieces_coordinates();
+    result.erase(tmp.begin(), tmp.end());
+    return result;
 }
