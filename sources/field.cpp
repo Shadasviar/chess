@@ -39,13 +39,13 @@ set<coordinates> field::get_attack_cells(const coordinates src) const
 }
 
 
-piece *field::get_piece(coordinates src) const
+shared_ptr<piece> field::get_piece(coordinates src) const
 {
     return get_cells()[src.x()][src.y()].get_piece();
 }
 
 
-void field::init_cell(coordinates c, piece *p)
+void field::init_cell(coordinates c, shared_ptr<piece> p)
 {
     get_cell(c).get_piece() = p;
 }

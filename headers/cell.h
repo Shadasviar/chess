@@ -1,6 +1,9 @@
 #ifndef CELL_H
 #define CELL_H
 #include "piece.h"
+#include <memory>
+
+using std::shared_ptr;
 
 
 class cell
@@ -11,13 +14,13 @@ public:
         place(place), current_piece(_piece){}
 
     enum cell_color{cell_white, cell_black};
-    piece*& get_piece(){return current_piece;}
+    shared_ptr<piece>& get_piece(){return current_piece;}
     void move_piece_to(cell dst);
 
 private:
     coordinates place;
     cell_color color;
-    piece* current_piece = nullptr;
+    shared_ptr<piece> current_piece = nullptr;
 };
 
 #endif // CELL_H

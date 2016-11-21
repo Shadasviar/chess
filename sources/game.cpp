@@ -3,12 +3,14 @@
 #include "pieces/down_pawn.h"
 
 #define INIT_CELL(piece_type, coordinate, color) \
-current_field.init_cell(coordinate, new piece_type(coordinate, color));\
+tmp.reset(new piece_type(coordinate, color));\
+current_field.init_cell(coordinate, tmp);\
 players[color].pieces.insert(current_field.get_piece(coordinate));
 
 
 game::game():current_player(players[piece::white])
 {
+    shared_ptr<piece> tmp;
     INIT_CELL(down_pawn, coordinates(0,6), piece::white);
     INIT_CELL(down_pawn, coordinates(1,5), piece::black);
     INIT_CELL(down_pawn, coordinates(0,5), piece::white);

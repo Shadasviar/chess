@@ -3,7 +3,7 @@
 set<coordinates> player::pieces_coordinates() const
 {
     set<coordinates> result;
-    for(piece* p : pieces){
+    for(auto p : pieces){
         result.insert(p->get_position());
     }
     return result;

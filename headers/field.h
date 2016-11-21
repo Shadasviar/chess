@@ -23,8 +23,8 @@ public:
     bool move(const coordinates src, const coordinates dst);
     set<coordinates> get_move_cells(const coordinates src) const;
     set<coordinates> get_attack_cells(const coordinates src) const;
-    piece* get_piece(coordinates src) const;
-    void init_cell(coordinates c, piece* p);
+    shared_ptr<piece> get_piece(coordinates src) const;
+    void init_cell(coordinates c, shared_ptr<piece> p);
 
 private:
     cell_table cells;
