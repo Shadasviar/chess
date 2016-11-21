@@ -1,5 +1,6 @@
 #include "field.h"
 #include "pieces/down_pawn.h"
+#include <algorithm>
 
 #define INIT_CELL(piece_obj, c, col) cell(c, new piece_obj(c, col))
 
@@ -26,10 +27,12 @@ bool field::move(const coordinates src, const coordinates dst, player players[PL
 
 set<coordinates> field::get_move_cells(const coordinates src) const
 {
+    if(get_piece(src) == nullptr) return set<coordinates>();
 
-    auto result = std::get<0>(check_diagonales(get_piece(src)->get_position(), get_piece(src)->all_moves()));
+    auto tmp1 = std::get<0>(check_diagonales(get_piece(src)->get_position(), get_piece(src)->all_moves()));
     auto tmp = std::get<0>(check_lines(get_piece(src)->get_position(), get_piece(src)->all_moves()));
-    result.insert(tmp.begin(), tmp.end());
+    set<coordinates> result;
+    std::set_intersection(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
 
     return result;
 }
@@ -37,6 +40,8 @@ set<coordinates> field::get_move_cells(const coordinates src) const
 
 set<coordinates> field::get_attack_cells(const coordinates src) const
 {
+    if(get_piece(src) == nullptr) return set<coordinates>();
+
     auto result = std::get<1>(check_diagonales(get_piece(src)->get_position(), get_piece(src)->all_attacks()));
     auto tmp = std::get<1>(check_lines(get_piece(src)->get_position(), get_piece(src)->all_attacks()));
     result.insert(tmp.begin(), tmp.end());
@@ -77,31 +82,31 @@ sets_of_movement field::check_diagonales(const coordinates curr, const set<coord
     set<coordinates> movement(mov), boarder_pieces;
 
     /*\up*/
-    auto tmp = check_one_diag(std::tie(movement, boarder_pieces),
+    sets_of_movement tmp = check_one_line(std::tie(movement, boarder_pieces),
                               [](int& x, int& y)->bool{return x >= 0 && y >= 0;},
                               {curr.x()-1, curr.y()-1},
                               [](int& x, int& y){--x; --y;}
     );
     /*/up*/
-    tmp = check_one_diag(tmp,
+    tmp = check_one_line(tmp,
                               [](int& x, int& y)->bool{return x < CELLS_NUM && y >= 0;},
                               {curr.x()+1, curr.y()-1},
                               [](int& x, int& y){++x; --y;}
     );
     /*\down*/
-    tmp = check_one_diag(tmp,
+    tmp = check_one_line(tmp,
                               [](int& x, int& y)->bool{return x < CELLS_NUM && y < CELLS_NUM;},
                               {curr.x()+1, curr.y()+1},
                               [](int& x, int& y){++x; ++y;}
     );
     /*/down*/
-    tmp = check_one_diag(tmp,
+    tmp = check_one_line(tmp,
                               [](int& x, int& y)->bool{return x >= 0 && y < CELLS_NUM;},
                               {curr.x()-1, curr.y()+1},
                               [](int& x, int& y){--x; ++y;}
     );
 
-    return std::tie(movement, boarder_pieces);
+    return tmp;
 }
 
 
@@ -110,66 +115,31 @@ sets_of_movement field::check_lines(const coordinates curr, const set<coordinate
     set<coordinates> movement(mov), boarder_pieces;
 
     /*up*/
-    bool remove = false;
-    for(int y(curr.y()-1); y >= 0; --y){
-        if(remove){
-            movement.erase(coordinates(curr.x(), y));
-            continue;
-        }
-        if(nullptr != get_piece(coordinates(curr.x(), y))){
-            remove = true;
-            if(mov.count(coordinates(curr.x(), y)) > 0){
-                boarder_pieces.insert(coordinates(curr.x(), y));
-            }
-        }
-    }
-
+    auto tmp = check_one_line(std::tie(movement, boarder_pieces),
+                              [](int&, int& y)->bool{return y >= 0;},
+                              {curr.x(), curr.y()-1},
+                              [](int&, int& y){--y;}
+    );
     /*right*/
-    remove = false;
-    for(int x(curr.x()+1); x < CELLS_NUM; ++x){
-        if(remove){
-            movement.erase(coordinates(x, curr.y()));
-            continue;
-        }
-        if(nullptr != get_piece(coordinates(x, curr.y()))){
-            remove = true;
-            if(mov.count(coordinates(x, curr.y())) > 0){
-                boarder_pieces.insert(coordinates(x, curr.y()));
-            }
-        }
-    }
-
+    tmp = check_one_line(tmp,
+                              [](int& x, int&)->bool{return x < CELLS_NUM;},
+                              {curr.x()+1, curr.y()},
+                              [](int& x, int&){++x;}
+    );
     /*down*/
-    remove = false;
-    for(int y(curr.y()+1); y < CELLS_NUM; ++y){
-        if(remove){
-            movement.erase(coordinates(curr.x(), y));
-            continue;
-        }
-        if(nullptr != get_piece(coordinates(curr.x(), y))){
-            remove = true;
-            if(mov.count(coordinates(curr.x(), y)) > 0){
-                boarder_pieces.insert(coordinates(curr.x(), y));
-            }
-        }
-    }
-
+    tmp = check_one_line(tmp,
+                              [](int&, int& y)->bool{return y < CELLS_NUM;},
+                              {curr.x(), curr.y()+1},
+                              [](int&, int& y){++y;}
+    );
     /*left*/
-    remove = false;
-    for(int x(curr.x()-1); x >= 0; --x){
-        if(remove){
-            movement.erase(coordinates(x, curr.y()));
-            continue;
-        }
-        if(nullptr != get_piece(coordinates(x, curr.y()))){
-            remove = true;
-            if(mov.count(coordinates(x, curr.y())) > 0){
-                boarder_pieces.insert(coordinates(x, curr.y()));
-            }
-        }
-    }
+    tmp = check_one_line(tmp,
+                              [](int& x, int&)->bool{return x >= 0;},
+                              {curr.x()-1, curr.y()},
+                              [](int& x, int&){--x;}
+    );
 
-    return std::tie(movement, boarder_pieces);
+    return tmp;
 }
 
 
@@ -185,7 +155,7 @@ cell_table field::get_cells() const
 }
 
 
-sets_of_movement field::check_one_diag(sets_of_movement sets,
+sets_of_movement field::check_one_line(sets_of_movement sets,
         bool (*condition)(int &, int &),
         array<int, 2> curr,
         void (*foo)(int &, int &)) const
@@ -215,4 +185,5 @@ sets_of_movement field::check_one_diag(sets_of_movement sets,
     }
     return std::tie(movement, boarder_pieces);
 }
+
 
