@@ -3,7 +3,11 @@
 
 field::field()
 {
-
+    for(uint8_t i(0); i < CELLS_NUM; ++i){
+        for(uint8_t j(0); j < CELLS_NUM; ++j){
+            cells[i][j].set_position({i,j});
+        }
+    }
 }
 
 
@@ -48,6 +52,7 @@ shared_ptr<piece> field::get_piece(coordinates src) const
 void field::init_cell(coordinates c, shared_ptr<piece> p)
 {
     get_cell(c).get_piece() = p;
+    get_cell(c).set_position(c);
 }
 
 

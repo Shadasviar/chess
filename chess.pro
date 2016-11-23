@@ -13,7 +13,8 @@ SOURCES += sources/main.cpp \
     sources/cell.cpp \
     sources/piece.cpp \
     pieces/down_pawn.cpp \
-    sources/player.cpp
+    sources/player.cpp \
+    pieces/up_pawn.cpp
 
 HEADERS += \
     headers/test_game.h \
@@ -23,5 +24,6 @@ HEADERS += \
     headers/cell.h \
     headers/piece.h \
     pieces/down_pawn.h \
-    headers/player.h
+    headers/player.h \
+    pieces/up_pawn.h
 

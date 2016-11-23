@@ -15,7 +15,8 @@ public:
 
     enum cell_color{cell_white, cell_black};
     shared_ptr<piece>& get_piece(){return current_piece;}
-    void move_piece_to(cell dst);
+    void move_piece_to(cell& dst);
+    void set_position(coordinates c){place = c;}
 
 private:
     coordinates place;
