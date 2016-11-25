@@ -5,6 +5,7 @@
 #include "pieces/knight.h"
 #include "pieces/bishop.h"
 #include "pieces/rook.h"
+#include "pieces/queen.h"
 
 #define INIT_CELL(piece_type, coordinate, color) \
 tmp.reset(new piece_type(coordinate, color));\
@@ -15,7 +16,7 @@ players[color].pieces.insert(current_field.get_piece(coordinate));
 game::game():current_player(&players[piece::white])
 {
     shared_ptr<piece> tmp;
-    INIT_CELL(rook, coordinates(0,6), piece::white);
+    INIT_CELL(queen, coordinates(0,6), piece::white);
     INIT_CELL(up_pawn, coordinates(1,5), piece::black);
     INIT_CELL(down_pawn, coordinates(0,5), piece::white);
     INIT_CELL(knight, coordinates(1,7), piece::black);
