@@ -6,8 +6,6 @@
 #include <tuple>
 #include <array>
 
-constexpr uint8_t CELLS_NUM = 8;
-
 using std::set;
 using std::tuple;
 using std::array;
@@ -32,6 +30,7 @@ private:
     /*first set - cells before first piece on way, second - pieces which cut way*/
     sets_of_movement check_diagonales(const coordinates curr, const set<coordinates> mov) const;
     sets_of_movement check_lines(const coordinates curr, const set<coordinates> mov) const;
+    sets_of_movement check_horse(const coordinates curr, const set<coordinates> mov) const;
     cell& get_cell(coordinates c);
     cell_table get_cells() const;
     sets_of_movement check_one_line(sets_of_movement, bool(*)(int &, int &), array<int, 2>, void(*)(int&, int&)) const;

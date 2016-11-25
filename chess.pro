@@ -14,7 +14,9 @@ SOURCES += sources/main.cpp \
     sources/piece.cpp \
     pieces/down_pawn.cpp \
     sources/player.cpp \
-    pieces/up_pawn.cpp
+    pieces/up_pawn.cpp \
+    pieces/knight.cpp \
+    pieces/bishop.cpp
 
 HEADERS += \
     headers/test_game.h \
@@ -25,5 +27,7 @@ HEADERS += \
     headers/piece.h \
     pieces/down_pawn.h \
     headers/player.h \
-    pieces/up_pawn.h
+    pieces/up_pawn.h \
+    pieces/knight.h \
+    pieces/bishop.h
 

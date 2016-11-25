@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <stdexcept>
 
+constexpr uint8_t CELLS_NUM = 8;
+
 
 class coordinates
 {

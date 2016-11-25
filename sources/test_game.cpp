@@ -19,8 +19,8 @@ test_game::test_game()
     b = g.get_move_cells({1,5});
 
 
-    a = g.get_move_cells({0,5});
-    b = g.get_attack_cells({0,5});
+    a = g.get_move_cells({1,7});
+    /*!!!!!!!!!!!!*/b = g.get_attack_cells({1,7});
     a = g.get_move_cells({3,5});
     assert(! g.move({0,0}, {2,5}));
 }

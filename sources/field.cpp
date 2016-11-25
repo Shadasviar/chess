@@ -27,6 +27,11 @@ set<coordinates> field::get_move_cells(const coordinates src) const
     set<coordinates> result;
     std::set_intersection(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
 
+    tmp = std::get<0>(check_horse(get_piece(src)->get_position(), get_piece(src)->all_moves()));
+    tmp1 = result;
+    result.clear();
+    std::set_intersection(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
+
     return result;
 }
 
@@ -37,6 +42,9 @@ set<coordinates> field::get_attack_cells(const coordinates src) const
 
     auto result = std::get<1>(check_diagonales(get_piece(src)->get_position(), get_piece(src)->all_attacks()));
     auto tmp = std::get<1>(check_lines(get_piece(src)->get_position(), get_piece(src)->all_attacks()));
+    result.insert(tmp.begin(), tmp.end());
+
+    tmp = std::get<1>(check_horse(get_piece(src)->get_position(), get_piece(src)->all_attacks()));
     result.insert(tmp.begin(), tmp.end());
 
     return result;
@@ -61,7 +69,7 @@ sets_of_movement field::check_diagonales(const coordinates curr, const set<coord
     set<coordinates> movement(mov), boarder_pieces;
 
     /*\up*/
-    sets_of_movement tmp = check_one_line(std::tie(movement, boarder_pieces),
+    auto tmp = check_one_line(std::tie(movement, boarder_pieces),
                               [](int& x, int& y)->bool{return x >= 0 && y >= 0;},
                               {curr.x()-1, curr.y()-1},
                               [](int& x, int& y){--x; --y;}
@@ -119,6 +127,35 @@ sets_of_movement field::check_lines(const coordinates curr, const set<coordinate
     );
 
     return tmp;
+}
+
+
+sets_of_movement field::check_horse(const coordinates curr, const set<coordinates> mov) const
+{
+    set<coordinates> movements(mov), attacked;
+    sets_of_movement result = std::tie(movements, attacked);
+
+    auto foo = [&](int x, int y)
+    {
+        try{
+            if(movements.count(curr.add(x,y)) == 0) return;
+        }catch(std::out_of_range&){return;};
+        if(get_piece(curr.add(x,y)) != nullptr){
+            std::get<0>(result).erase(curr.add(x,y));
+            std::get<1>(result).insert(curr.add(x,y));
+        }
+    };
+
+    foo(-1,2);
+    foo(1,2);
+    foo(1,-2);
+    foo(-1,-2);
+    foo(-2,1);
+    foo(2,1);
+    foo(2,-1);
+    foo(-2,-1);
+
+    return result;
 }
 
 
