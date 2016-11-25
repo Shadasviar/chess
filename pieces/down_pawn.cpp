@@ -19,8 +19,13 @@ set<coordinates> down_pawn::all_attacks()
 {
     set<coordinates> res;
     try{
-        res.insert(position.add(1,-1));
         res.insert(position.add(-1,-1));
+    }catch(std::out_of_range& ex){
+        //ok
+    }
+
+    try{
+        res.insert(position.add(1,-1));
     }catch(std::out_of_range& ex){
         //ok
     }
