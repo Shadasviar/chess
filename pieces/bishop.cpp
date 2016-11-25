@@ -3,7 +3,7 @@
 set<coordinates> bishop::all_moves()
 {
     set<coordinates> res;
-    try{
+
         for(uint8_t i(position.x()+1), j(position.y()+1); i < CELLS_NUM && j < CELLS_NUM; ++i, ++j){
             res.insert(coordinates(i,j));
         }
@@ -16,9 +16,6 @@ set<coordinates> bishop::all_moves()
         for(int i(position.x()+1), j(position.y()-1); j >= 0 && i < CELLS_NUM; --j, ++i){
             res.insert(coordinates(i,j));
         }
-    }catch(std::out_of_range& ex){
-        //catched - ok
-    }
 
     return res;
 }
