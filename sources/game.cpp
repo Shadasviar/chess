@@ -6,6 +6,7 @@
 #include "pieces/bishop.h"
 #include "pieces/rook.h"
 #include "pieces/queen.h"
+#include "pieces/king.h"
 
 #define INIT_CELL(piece_type, coordinate, color) \
 tmp.reset(new piece_type(coordinate, color));\
@@ -16,7 +17,7 @@ players[color].pieces.insert(current_field.get_piece(coordinate));
 game::game():current_player(&players[piece::white])
 {
     shared_ptr<piece> tmp;
-    INIT_CELL(queen, coordinates(0,6), piece::white);
+    INIT_CELL(king, coordinates(0,6), piece::white);
     INIT_CELL(up_pawn, coordinates(1,5), piece::black);
     INIT_CELL(down_pawn, coordinates(0,5), piece::white);
     INIT_CELL(knight, coordinates(1,7), piece::black);
@@ -56,8 +57,9 @@ set<coordinates> game::get_move_cells(const coordinates src)
 set<coordinates> game::get_attack_cells(const coordinates src)
 {
     set<coordinates> result;
+    if(current_field.get_piece(src) == nullptr) return result;
     auto tmp1 = current_field.get_attack_cells(src);
-    auto tmp = current_player->pieces_coordinates();
+    auto tmp = players[current_field.get_piece(src)->owner_color()].pieces_coordinates();
     std::set_difference(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
     return result;
 }

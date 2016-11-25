@@ -18,7 +18,8 @@ SOURCES += sources/main.cpp \
     pieces/knight.cpp \
     pieces/bishop.cpp \
     pieces/rook.cpp \
-    pieces/queen.cpp
+    pieces/queen.cpp \
+    pieces/king.cpp
 
 HEADERS += \
     headers/test_game.h \
@@ -33,5 +34,6 @@ HEADERS += \
     pieces/knight.h \
     pieces/bishop.h \
     pieces/rook.h \
-    pieces/queen.h
+    pieces/queen.h \
+    pieces/king.h
 
