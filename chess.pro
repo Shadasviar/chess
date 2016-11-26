@@ -1,11 +1,22 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2016-11-22T19:24:53
+#
+#-------------------------------------------------
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = gui_chess
 TEMPLATE = app
-CONFIG += console c++11
-CONFIG -= app_bundle
-CONFIG -= qt
 
 INCLUDEPATH += headers/
 
+
 SOURCES += sources/main.cpp \
+    sources/mainwindow.cpp \
+    sources/myview.cpp \
     sources/test_game.cpp \
     sources/game.cpp \
     sources/field.cpp \
@@ -21,7 +32,8 @@ SOURCES += sources/main.cpp \
     pieces/queen.cpp \
     pieces/king.cpp
 
-HEADERS += \
+HEADERS  += headers/mainwindow.h \
+    headers/myview.h \
     headers/test_game.h \
     headers/game.h \
     headers/field.h \
@@ -37,3 +49,7 @@ HEADERS += \
     pieces/queen.h \
     pieces/king.h
 
+FORMS    += mainwindow.ui
+
+RESOURCES += \
+    images.qrc
