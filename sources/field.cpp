@@ -6,6 +6,12 @@ field::field()
     for(uint8_t i(0); i < CELLS_NUM; ++i){
         for(uint8_t j(0); j < CELLS_NUM; ++j){
             cells[i][j].set_position({i,j});
+            if((j+i)%2 != 0){
+                cells[i][j].set_color(piece::black);
+            }
+            else{
+                cells[i][j].set_color(piece::white);
+            }
         }
     }
 }
