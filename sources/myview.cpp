@@ -3,10 +3,11 @@
 #include<QGraphicsItem>
 
 
-MyView::MyView(QGraphicsView *parent): QGraphicsView(parent)
+MyView::MyView(QGraphicsView *parent): QGraphicsView(parent), current_game()
 {
 
 }
+
 
 void MyView::mousePressEvent(QMouseEvent *e)
 {
@@ -16,10 +17,21 @@ void MyView::mousePressEvent(QMouseEvent *e)
     QPixmap pixmap(CELL_SIZE, CELL_SIZE);
     pixmap.fill( QColor(150, 250, 50, 150));
 
-    auto* tmp = scene()->addPixmap(pixmap);
-    selection.insert(tmp);
-    auto i = item->pos();
-    tmp->setPos(i);
+    auto cell_pos = item->pos();
+    cell_pos.setX(cell_pos.x()/CELL_SIZE);
+    cell_pos.setY(cell_pos.y()/CELL_SIZE);
+
+    auto moves = current_game.get_move_cells(coordinates(cell_pos));
+
+    for(coordinates c : moves){
+
+        auto* tmp = scene()->addPixmap(pixmap);
+        selection.insert(tmp);
+        auto i = c.get_QPointF();
+        i.setX(i.x() * CELL_SIZE);
+        i.setY(i.y() * CELL_SIZE);
+        tmp->setPos(i);
+    }
 
 }
 

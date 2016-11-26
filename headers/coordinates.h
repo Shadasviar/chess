@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <stdexcept>
+#include <QPointF>
 
 constexpr uint8_t CELLS_NUM = 8;
 
@@ -11,6 +12,8 @@ class coordinates
 {
 public:
     coordinates(uint8_t x = 0, uint8_t y = 0) throw(std::out_of_range);
+    coordinates(QPointF point);
+    QPointF get_QPointF();
 
     uint8_t x() const {return _x;}
     uint8_t y() const {return _y;}

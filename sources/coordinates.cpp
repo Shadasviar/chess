@@ -10,6 +10,21 @@ coordinates::coordinates(uint8_t x, uint8_t y) throw(std::out_of_range):_x(x), _
 }
 
 
+coordinates::coordinates(QPointF point)
+{
+    uint8_t x, y;
+    x = point.x();
+    y = point.y();
+    *this = coordinates(x, y);
+}
+
+
+QPointF coordinates::get_QPointF()
+{
+    return QPointF(_x, _y);
+}
+
+
 void coordinates::set_x(uint8_t x)throw(std::out_of_range)
 {
     assert(x < 8);

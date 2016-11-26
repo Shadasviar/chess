@@ -2,6 +2,7 @@
 #define MYVIEW_H
 #include <QGraphicsView>
 #include <QSet>
+#include "game.h"
 
 
 class MyView : public QGraphicsView
@@ -22,6 +23,7 @@ private:
     QGraphicsPixmapItem* field[8][8];
     QSet<QGraphicsPixmapItem*> selection;
     QGraphicsPixmapItem* current_cell;
+    game current_game;
 };
 
 #endif // MYVIEW_H
