@@ -20,13 +20,14 @@ private:
     void set_img(int i, int j, const QString src);
     QGraphicsScene* init_scene();
     void highlight_moves(QPointF);
+    void move(const coordinates src, const coordinates dst);
 
     static QPointF to_qpointf(const coordinates& c);
     static coordinates to_coordinates(const QPointF& p);
 
     QGraphicsPixmapItem* field[8][8];
     QSet<QGraphicsPixmapItem*> selection;
-    QGraphicsPixmapItem* current_cell;
+    QGraphicsItem* current_cell;
     game current_game;
 };
 

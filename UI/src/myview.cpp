@@ -3,7 +3,7 @@
 #include<QGraphicsItem>
 
 
-MyView::MyView(QGraphicsView *parent): QGraphicsView(parent), current_game()
+MyView::MyView(QGraphicsView *parent): QGraphicsView(parent),current_cell(nullptr), current_game()
 {
 
 }
@@ -13,7 +13,18 @@ void MyView::mousePressEvent(QMouseEvent *e)
 {
     QPointF scenePt = mapToScene(e->pos());
     QGraphicsItem* item = this->scene()->itemAt(scenePt, transform());
-    highlight_moves(item->pos());
+    if(selection.size() == 0){
+        current_cell = item;
+        highlight_moves(item->pos());
+    }else{
+        if(current_game.move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
+            move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
+            clear_selection();
+        }else{
+            clear_selection();
+        }
+    }
+
 
 }
 
@@ -45,8 +56,8 @@ void MyView::set_img(int i, int j, const QString src){
 QGraphicsScene *MyView::init_scene()
 {
     /*create board cells*/
-    for(uint i(0); i < CELLS_NUM; ++i){
-        for(uint j(0); j < CELLS_NUM; ++j){
+    for(uint8_t i(0); i < CELLS_NUM; ++i){
+        for(uint8_t j(0); j < CELLS_NUM; ++j){
 
             QPixmap pixmap(CELL_SIZE, CELL_SIZE);
 
@@ -57,7 +68,7 @@ QGraphicsScene *MyView::init_scene()
                 pixmap.fill(Qt::white);
             }
             field[i][j] = scene()->addPixmap(pixmap);
-            field[i][j]->setPos(i*CELL_SIZE, j*CELL_SIZE);
+            field[i][j]->setPos(to_qpointf({i,j}));
             field[i][j] = nullptr;
         }
     }
@@ -112,10 +123,25 @@ void MyView::highlight_moves(QPointF cell_pos)
 
     moves = current_game.get_attack_cells(to_coordinates(cell_pos));
     pixmap = QPixmap(CELL_SIZE, CELL_SIZE);
-    pixmap.fill( QColor(250, 20, 20, 150));
+    pixmap.fill( QColor(250, 20, 20, 120));
 
     paint(pixmap, moves);
 
+    pixmap = QPixmap(CELL_SIZE, CELL_SIZE);
+    pixmap.fill( QColor(20, 20, 180, 100));
+    moves.clear();
+    moves.insert(to_coordinates(cell_pos));
+    paint(pixmap, moves);
+
+}
+
+
+void MyView::move(const coordinates src, const coordinates dst)
+{
+    if(field[dst.x()][dst.y()]) delete field[dst.x()][dst.y()];
+    field[dst.x()][dst.y()] = field[src.x()][src.y()];
+    field[src.x()][src.y()] = nullptr;
+    field[dst.x()][dst.y()]->setPos(to_qpointf(dst));
 }
 
 
