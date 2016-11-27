@@ -11,45 +11,47 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = gui_chess
 TEMPLATE = app
 
-INCLUDEPATH += headers/
+INCLUDEPATH += chess/headers/
+INCLUDEPATH += chess/
+INCLUDEPATH += UI/headers/
 
 
-SOURCES += sources/main.cpp \
-    sources/mainwindow.cpp \
-    sources/myview.cpp \
-    sources/test_game.cpp \
-    sources/game.cpp \
-    sources/field.cpp \
-    sources/coordinates.cpp \
-    sources/cell.cpp \
-    sources/piece.cpp \
-    pieces/down_pawn.cpp \
-    sources/player.cpp \
-    pieces/up_pawn.cpp \
-    pieces/knight.cpp \
-    pieces/bishop.cpp \
-    pieces/rook.cpp \
-    pieces/queen.cpp \
-    pieces/king.cpp
+SOURCES += main.cpp \
+    UI/src/mainwindow.cpp \
+    UI/src/myview.cpp \
+    chess/src/test_game.cpp \
+    chess/src/game.cpp \
+    chess/src/field.cpp \
+    chess/src/coordinates.cpp \
+    chess/src/cell.cpp \
+    chess/src/piece.cpp \
+    chess/pieces/down_pawn.cpp \
+    chess/src/player.cpp \
+    chess/pieces/up_pawn.cpp \
+    chess/pieces/knight.cpp \
+    chess/pieces/bishop.cpp \
+    chess/pieces/rook.cpp \
+    chess/pieces/queen.cpp \
+    chess/pieces/king.cpp
 
-HEADERS  += headers/mainwindow.h \
-    headers/myview.h \
-    headers/test_game.h \
-    headers/game.h \
-    headers/field.h \
-    headers/coordinates.h \
-    headers/cell.h \
-    headers/piece.h \
-    pieces/down_pawn.h \
-    headers/player.h \
-    pieces/up_pawn.h \
-    pieces/knight.h \
-    pieces/bishop.h \
-    pieces/rook.h \
-    pieces/queen.h \
-    pieces/king.h
+HEADERS  += UI/headers/mainwindow.h \
+    UI/headers/myview.h \
+    chess/headers/test_game.h \
+    chess/headers/game.h \
+    chess/headers/field.h \
+    chess/headers/coordinates.h \
+    chess/headers/cell.h \
+    chess/headers/piece.h \
+    chess/pieces/down_pawn.h \
+    chess/headers/player.h \
+    chess/pieces/up_pawn.h \
+    chess/pieces/knight.h \
+    chess/pieces/bishop.h \
+    chess/pieces/rook.h \
+    chess/pieces/queen.h \
+    chess/pieces/king.h
 
-FORMS    += mainwindow.ui
+FORMS    += UI/mainwindow.ui
 
 RESOURCES += \
     images.qrc
