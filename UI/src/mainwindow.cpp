@@ -40,6 +40,6 @@ void MainWindow::on_actionSelect_triggered()
 void MainWindow::data_changed(game::color col)
 {
     ui->curr_player_name_label->setText((col == game::white)
-                                        ? "White"
-                                        : "Black");
+                                        ? tr("White")
+                                        : tr("Black"));
 }
