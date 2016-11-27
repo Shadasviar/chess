@@ -20,6 +20,9 @@ private:
     void set_img(int i, int j, const QString src);
     QGraphicsScene* init_scene();
 
+    static QPointF to_qpointf(const coordinates c);
+    static coordinates to_coordinates(const QPointF p);
+
     QGraphicsPixmapItem* field[8][8];
     QSet<QGraphicsPixmapItem*> selection;
     QGraphicsPixmapItem* current_cell;

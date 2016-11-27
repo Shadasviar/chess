@@ -21,13 +21,13 @@ void MyView::mousePressEvent(QMouseEvent *e)
     cell_pos.setX(cell_pos.x()/CELL_SIZE);
     cell_pos.setY(cell_pos.y()/CELL_SIZE);
 
-    auto moves = current_game.get_move_cells(coordinates(cell_pos));
+    auto moves = current_game.get_move_cells(to_coordinates(cell_pos));
 
     for(coordinates c : moves){
 
         auto* tmp = scene()->addPixmap(pixmap);
         selection.insert(tmp);
-        auto i = c.get_QPointF();
+        auto i = to_qpointf(c);
         i.setX(i.x() * CELL_SIZE);
         i.setY(i.y() * CELL_SIZE);
         tmp->setPos(i);
@@ -109,5 +109,20 @@ QGraphicsScene *MyView::init_scene()
     set_img(4,7,":/images/img/w_king.png");
 
     return scene();
+}
+
+
+QPointF MyView::to_qpointf(const coordinates c)
+{
+    QPointF res;
+    res.setX(c.x());
+    res.setY(c.y());
+    return res;
+}
+
+
+coordinates MyView::to_coordinates(const QPointF p)
+{
+    return coordinates(p.x(), p.y());
 }
 
