@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->board->setFixedSize(MyView::CELLS_NUM*MyView::CELL_SIZE, MyView::CELLS_NUM*MyView::CELL_SIZE);
     view = new MyView(ui->board);
+
+    QObject::connect(view, SIGNAL(data_changed(game::color)), this, SLOT(data_changed(game::color)));
+
     QGraphicsScene* scene = new QGraphicsScene();
     view->set_scene(scene);
     view->show();
@@ -30,5 +33,13 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionSelect_triggered()
 {
-    view->clear_selection();
+    //view->clear_selection();
+}
+
+
+void MainWindow::data_changed(game::color col)
+{
+    ui->curr_player_name_label->setText((col == game::white)
+                                        ? "White"
+                                        : "Black");
 }

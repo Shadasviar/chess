@@ -7,20 +7,25 @@
 
 class MyView : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     MyView(QGraphicsView* parent);
     void mousePressEvent(QMouseEvent * e) override;
     void set_scene(QGraphicsScene * scene);
-    void clear_selection();
 
     static constexpr uint CELL_SIZE = 80;
     static constexpr uint CELLS_NUM = 8;
+
+signals:
+    void data_changed(game::color);
 
 private:
     void set_img(int i, int j, const QString src);
     QGraphicsScene* init_scene();
     void highlight_moves(QPointF);
     void move(const coordinates src, const coordinates dst);
+    void clear_selection();
 
     static QPointF to_qpointf(const coordinates& c);
     static coordinates to_coordinates(const QPointF& p);

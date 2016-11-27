@@ -17,6 +17,9 @@ public:
     set<coordinates> get_move_cells(const coordinates src);
     set<coordinates> get_attack_cells(const coordinates src);
 
+    enum color{white, black};
+    color get_current_player_color(){return (current_player->color == piece::white)? white : black;}
+
 private:
     void switch_player(){current_player = (current_player->color == piece::white)
                 ? &players[piece::black] : &players[piece::white];}

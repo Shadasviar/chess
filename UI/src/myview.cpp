@@ -20,6 +20,7 @@ void MyView::mousePressEvent(QMouseEvent *e)
         if(current_game.move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
             move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
             clear_selection();
+            emit data_changed(current_game.get_current_player_color());
         }else{
             clear_selection();
         }
@@ -47,7 +48,7 @@ void MyView::clear_selection()
 
 void MyView::set_img(int i, int j, const QString src){
     QPixmap pixmap(src);
-    pixmap = pixmap.scaled(CELL_SIZE, CELL_SIZE);
+    pixmap = pixmap.scaled(CELL_SIZE, CELL_SIZE, Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     field[i][j] = scene()->addPixmap(pixmap);
     field[i][j]->setPos(i*CELL_SIZE, j*CELL_SIZE);
 }

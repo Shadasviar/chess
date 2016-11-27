@@ -19,8 +19,8 @@ public:
 
 private slots:
     void on_actionExit_triggered();
-
     void on_actionSelect_triggered();
+    void data_changed(game::color);
 
 private:
     /*
