@@ -100,18 +100,11 @@ void MyView::highlight_moves(QPointF cell_pos)
         for(coordinates c : moves){
             auto* tmp = scene()->addPixmap(pic);
             selection.insert(tmp);
-            auto i = to_qpointf(c);
-            i.setX(i.x() * CELL_SIZE);
-            i.setY(i.y() * CELL_SIZE);
-            tmp->setPos(i);
+            tmp->setPos(to_qpointf(c));
         }
     };
 
-    cell_pos.setX(cell_pos.x()/CELL_SIZE);
-    cell_pos.setY(cell_pos.y()/CELL_SIZE);
-
     auto moves = current_game.get_move_cells(to_coordinates(cell_pos));
-
     QPixmap pixmap(CELL_SIZE, CELL_SIZE);
     pixmap.fill( QColor(150, 250, 50, 150));
 
@@ -129,14 +122,14 @@ void MyView::highlight_moves(QPointF cell_pos)
 QPointF MyView::to_qpointf(const coordinates& c)
 {
     QPointF res;
-    res.setX(c.x());
-    res.setY(c.y());
+    res.setX(c.x() * CELL_SIZE);
+    res.setY(c.y() * CELL_SIZE);
     return res;
 }
 
 
 coordinates MyView::to_coordinates(const QPointF &p)
 {
-    return coordinates(p.x(), p.y());
+    return coordinates(p.x() / CELL_SIZE, p.y() / CELL_SIZE);
 }
 
