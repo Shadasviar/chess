@@ -13,25 +13,7 @@ void MyView::mousePressEvent(QMouseEvent *e)
 {
     QPointF scenePt = mapToScene(e->pos());
     QGraphicsItem* item = this->scene()->itemAt(scenePt, transform());
-
-    QPixmap pixmap(CELL_SIZE, CELL_SIZE);
-    pixmap.fill( QColor(150, 250, 50, 150));
-
-    auto cell_pos = item->pos();
-    cell_pos.setX(cell_pos.x()/CELL_SIZE);
-    cell_pos.setY(cell_pos.y()/CELL_SIZE);
-
-    auto moves = current_game.get_move_cells(to_coordinates(cell_pos));
-
-    for(coordinates c : moves){
-
-        auto* tmp = scene()->addPixmap(pixmap);
-        selection.insert(tmp);
-        auto i = to_qpointf(c);
-        i.setX(i.x() * CELL_SIZE);
-        i.setY(i.y() * CELL_SIZE);
-        tmp->setPos(i);
-    }
+    highlight_moves(item->pos());
 
 }
 
@@ -112,7 +94,39 @@ QGraphicsScene *MyView::init_scene()
 }
 
 
-QPointF MyView::to_qpointf(const coordinates c)
+void MyView::highlight_moves(QPointF cell_pos)
+{
+    auto paint = [&](QPixmap pic, set<coordinates> moves){
+        for(coordinates c : moves){
+            auto* tmp = scene()->addPixmap(pic);
+            selection.insert(tmp);
+            auto i = to_qpointf(c);
+            i.setX(i.x() * CELL_SIZE);
+            i.setY(i.y() * CELL_SIZE);
+            tmp->setPos(i);
+        }
+    };
+
+    cell_pos.setX(cell_pos.x()/CELL_SIZE);
+    cell_pos.setY(cell_pos.y()/CELL_SIZE);
+
+    auto moves = current_game.get_move_cells(to_coordinates(cell_pos));
+
+    QPixmap pixmap(CELL_SIZE, CELL_SIZE);
+    pixmap.fill( QColor(150, 250, 50, 150));
+
+    paint(pixmap, moves);
+
+    moves = current_game.get_attack_cells(to_coordinates(cell_pos));
+    pixmap = QPixmap(CELL_SIZE, CELL_SIZE);
+    pixmap.fill( QColor(250, 20, 20, 150));
+
+    paint(pixmap, moves);
+
+}
+
+
+QPointF MyView::to_qpointf(const coordinates& c)
 {
     QPointF res;
     res.setX(c.x());
@@ -121,7 +135,7 @@ QPointF MyView::to_qpointf(const coordinates c)
 }
 
 
-coordinates MyView::to_coordinates(const QPointF p)
+coordinates MyView::to_coordinates(const QPointF &p)
 {
     return coordinates(p.x(), p.y());
 }
