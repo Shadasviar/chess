@@ -31,12 +31,6 @@ void MainWindow::on_actionExit_triggered()
 }
 
 
-void MainWindow::on_actionSelect_triggered()
-{
-    //view->clear_selection();
-}
-
-
 void MainWindow::data_changed(game::color col)
 {
     ui->curr_player_name_label->setText((col == game::white)
