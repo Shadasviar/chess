@@ -4,21 +4,21 @@
 #include "coordinates.h"
 #include "field.h"
 #include "player.h"
+#include "igame.h"
 
 using std::set;
 
 
-class game
+class game : public Igame
 {
 public:
     game();
 
-    bool move(const coordinates src, const coordinates dst);
-    set<coordinates> get_move_cells(const coordinates src);
-    set<coordinates> get_attack_cells(const coordinates src);
+    bool move(const coordinates src, const coordinates dst) override;
+    set<coordinates> get_move_cells(const coordinates src) override;
+    set<coordinates> get_attack_cells(const coordinates src) override;
 
-    enum color{white, black};
-    color get_current_player_color(){return (current_player->color == piece::white)? white : black;}
+    Igame::color get_current_player_color()override {return (current_player->color == piece::white)? white : black;}
 
 private:
     void switch_player(){current_player = (current_player->color == piece::white)

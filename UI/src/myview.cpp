@@ -3,7 +3,8 @@
 #include<QGraphicsItem>
 
 
-MyView::MyView(QGraphicsView *parent): QGraphicsView(parent),current_cell(nullptr), current_game()
+MyView::MyView(QGraphicsView *parent):
+    QGraphicsView(parent),current_cell(nullptr), current_game(new game())
 {
 
 }
@@ -17,10 +18,10 @@ void MyView::mousePressEvent(QMouseEvent *e)
         current_cell = item;
         highlight_moves(item->pos());
     }else{
-        if(current_game.move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
+        if(current_game->move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
             move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
             clear_selection();
-            emit data_changed(current_game.get_current_player_color());
+            emit data_changed(current_game->get_current_player_color());
         }else{
             clear_selection();
         }
@@ -116,13 +117,13 @@ void MyView::highlight_moves(QPointF cell_pos)
         }
     };
 
-    auto moves = current_game.get_move_cells(to_coordinates(cell_pos));
+    auto moves = current_game->get_move_cells(to_coordinates(cell_pos));
     QPixmap pixmap(CELL_SIZE, CELL_SIZE);
     pixmap.fill( QColor(150, 250, 50, 150));
 
     paint(pixmap, moves);
 
-    moves = current_game.get_attack_cells(to_coordinates(cell_pos));
+    moves = current_game->get_attack_cells(to_coordinates(cell_pos));
     pixmap = QPixmap(CELL_SIZE, CELL_SIZE);
     pixmap.fill( QColor(250, 20, 20, 120));
 

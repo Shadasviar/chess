@@ -49,7 +49,8 @@ HEADERS  += UI/headers/mainwindow.h \
     chess/pieces/bishop.h \
     chess/pieces/rook.h \
     chess/pieces/queen.h \
-    chess/pieces/king.h
+    chess/pieces/king.h \
+    chess/headers/igame.h
 
 FORMS    += UI/mainwindow.ui
 

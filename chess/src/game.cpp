@@ -14,7 +14,7 @@ current_field.init_cell(coordinate, tmp);\
 players[color].pieces.insert(current_field.get_piece(coordinate));
 
 
-game::game():current_player(&players[piece::white])
+game::game():Igame(), current_player(&players[piece::white])
 {
     shared_ptr<piece> tmp;
 

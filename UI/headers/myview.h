@@ -2,6 +2,7 @@
 #define MYVIEW_H
 #include <QGraphicsView>
 #include <QSet>
+#include "igame.h"
 #include "game.h"
 
 
@@ -33,7 +34,7 @@ private:
     QGraphicsPixmapItem* field[8][8];
     QSet<QGraphicsPixmapItem*> selection;
     QGraphicsItem* current_cell;
-    game current_game;
+    Igame* current_game;
 };
 
 #endif // MYVIEW_H
