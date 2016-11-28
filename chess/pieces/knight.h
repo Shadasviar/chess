@@ -12,9 +12,6 @@ public:
     set<coordinates> all_attacks() override;
 
     ~knight() override;
-
-private:
-    void add_cell(int a, int b, set<coordinates> &result);
 };
 
 #endif // KNIGHT_H
