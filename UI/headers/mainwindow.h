@@ -20,6 +20,7 @@ public:
 private slots:
     void on_actionExit_triggered();
     void data_changed(game::color);
+    void under_check(QString);
 
 private:
     Ui::MainWindow *ui;

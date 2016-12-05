@@ -9,6 +9,11 @@ MyView::MyView(QGraphicsView *parent):
 
 }
 
+MyView::~MyView()
+{
+    delete current_game;
+}
+
 
 void MyView::mousePressEvent(QMouseEvent *e)
 {
@@ -21,6 +26,12 @@ void MyView::mousePressEvent(QMouseEvent *e)
         if(current_game->move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
             move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
             clear_selection();
+            if(current_game->current_player_is_under_check()){
+                emit under_check("Under check!!!");
+            }
+            else{
+                emit under_check("");
+            }
             emit data_changed(current_game->get_current_player_color());
         }else{
             clear_selection();
@@ -76,10 +87,10 @@ QGraphicsScene *MyView::init_scene()
     }
 
     /*init board by pieces*/
-    for(uint i(0); i < CELLS_NUM; ++i){
+    for(size_t i(0); i < CELLS_NUM; ++i){
          set_img(i,1,":/images/img/b_pawn.png");
     }
-    for(uint i(0); i < CELLS_NUM; ++i){
+    for(size_t i(0); i < CELLS_NUM; ++i){
         set_img(i,6,":/images/img/w_pawn.png");
     }
     set_img(0,0,":/images/img/b_rook.png");

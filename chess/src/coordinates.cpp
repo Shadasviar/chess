@@ -52,3 +52,8 @@ bool operator<(const coordinates &lhs, const coordinates &rhs)
     if(lhs._x == rhs._x && lhs._y < rhs._y) return true;
     return false;
 }
+
+
+bool operator==(const coordinates& lhs, const coordinates& rhs){
+    return (lhs.x() == rhs.x() && lhs.y() == rhs.y());
+}

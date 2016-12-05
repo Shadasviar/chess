@@ -18,10 +18,10 @@ game::game():Igame(), current_player(&players[piece::white])
 {
     shared_ptr<piece> tmp;
 
-    for(uint i(0); i < CELLS_NUM; ++i){
+    for(size_t i(0); i < CELLS_NUM; ++i){
         INIT_CELL(up_pawn, coordinates(i,1), piece::black);
     }
-    for(uint i(0); i < CELLS_NUM; ++i){
+    for(size_t i(0); i < CELLS_NUM; ++i){
         INIT_CELL(down_pawn, coordinates(i,6), piece::white);
     }
 
@@ -44,7 +44,9 @@ game::game():Igame(), current_player(&players[piece::white])
     INIT_CELL(queen, coordinates(3,0), piece::black);
 
     INIT_CELL(king, coordinates(4,7), piece::white);
+    players[piece::white].king = tmp;
     INIT_CELL(king, coordinates(4,0), piece::black);
+    players[piece::black].king = tmp;
 }
 
 
@@ -86,6 +88,16 @@ set<coordinates> game::get_attack_cells(const coordinates src)
     auto tmp = players[current_field.get_piece(src)->owner_color()].pieces_coordinates();
     std::set_difference(tmp1.begin(), tmp1.end(), tmp.begin(), tmp.end(), std::inserter(result, result.end()));
     return result;
+}
+
+
+bool game::current_player_is_under_check()
+{
+    player* enemy = (current_player->color == piece::white) ? &players[piece::black] : &players[piece::white];
+    for(shared_ptr<piece> p : enemy->pieces){
+        if(current_field.get_attack_cells(p->get_position()).count(current_player->king->get_position()) > 0) return true;
+    }
+    return false;
 }
 
 

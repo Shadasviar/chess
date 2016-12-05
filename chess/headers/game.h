@@ -17,6 +17,7 @@ public:
     bool move(const coordinates src, const coordinates dst) override;
     set<coordinates> get_move_cells(const coordinates src) override;
     set<coordinates> get_attack_cells(const coordinates src) override;
+    bool current_player_is_under_check() override;
 
     Igame::color get_current_player_color()override {return (current_player->color == piece::white)? white : black;}
 

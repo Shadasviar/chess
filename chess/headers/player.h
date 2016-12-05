@@ -18,6 +18,7 @@ public:
 
     set<shared_ptr<piece> > pieces;
     set<coordinates> pieces_coordinates() const;
+    shared_ptr<piece> king;
     piece::player_color color;
 };
 

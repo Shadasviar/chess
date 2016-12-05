@@ -12,6 +12,7 @@ class MyView : public QGraphicsView
 
 public:
     MyView(QGraphicsView* parent);
+    ~MyView();
     void mousePressEvent(QMouseEvent * e) override;
     void set_scene(QGraphicsScene * scene);
 
@@ -20,6 +21,7 @@ public:
 
 signals:
     void data_changed(game::color);
+    void under_check(QString);
 
 private:
     void set_img(int i, int j, const QString src);
