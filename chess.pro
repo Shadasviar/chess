@@ -23,7 +23,6 @@ SOURCES += main.cpp \
     chess/src/game.cpp \
     chess/src/field.cpp \
     chess/src/coordinates.cpp \
-    chess/src/cell.cpp \
     chess/src/piece.cpp \
     chess/pieces/down_pawn.cpp \
     chess/src/player.cpp \
@@ -40,7 +39,6 @@ HEADERS  += UI/headers/mainwindow.h \
     chess/headers/game.h \
     chess/headers/field.h \
     chess/headers/coordinates.h \
-    chess/headers/cell.h \
     chess/headers/piece.h \
     chess/pieces/down_pawn.h \
     chess/headers/player.h \

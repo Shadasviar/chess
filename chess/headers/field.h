@@ -1,16 +1,23 @@
 #ifndef FIELD_H
 #define FIELD_H
 #include"coordinates.h"
-#include "cell.h"
+//#include "cell.h"
 #include <set>
 #include <tuple>
+#include <map>
+#include <memory>
 #include <array>
+#include "piece.h"
 
 using std::set;
 using std::tuple;
+using std::map;
 using std::array;
+using std::shared_ptr;
+
 using sets_of_movement = tuple<set<coordinates>, set<coordinates>>;
-using cell_table = array<array<cell, CELLS_NUM>, CELLS_NUM>;
+using cell_table = map<coordinates, shared_ptr<piece> >;
+using p_piece = shared_ptr<piece>;
 
 
 class field
@@ -21,8 +28,8 @@ public:
     bool move(const coordinates src, const coordinates dst);
     set<coordinates> get_move_cells(const coordinates src) const;
     set<coordinates> get_attack_cells(const coordinates src) const;
-    shared_ptr<piece> get_piece(coordinates src) const;
-    void init_cell(coordinates c, shared_ptr<piece> p);
+    p_piece get_piece(coordinates src) const;
+    void init_cell(coordinates c, p_piece p);
 
 private:
     cell_table cells;
@@ -31,7 +38,7 @@ private:
     sets_of_movement check_diagonales(const coordinates curr, const set<coordinates> mov) const;
     sets_of_movement check_lines(const coordinates curr, const set<coordinates> mov) const;
     sets_of_movement check_horse(const coordinates curr, const set<coordinates> mov) const;
-    cell& get_cell(coordinates c);
+    //cell& get_cell(coordinates c);
     cell_table get_cells() const;
     sets_of_movement check_one_line(sets_of_movement, bool(*)(int &, int &), array<int, 2>, void(*)(int&, int&)) const;
 };

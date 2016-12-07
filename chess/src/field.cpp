@@ -3,23 +3,16 @@
 
 field::field()
 {
-    for(uint8_t i(0); i < CELLS_NUM; ++i){
-        for(uint8_t j(0); j < CELLS_NUM; ++j){
-            cells[i][j].set_position({i,j});
-            if((j+i)%2 != 0){
-                cells[i][j].set_color(piece::black);
-            }
-            else{
-                cells[i][j].set_color(piece::white);
-            }
-        }
-    }
 }
 
 
 bool field::move(const coordinates src, const coordinates dst)
 {
-    get_cell(src).move_piece_to(get_cell(dst));
+    if(cells.count(dst) > 0) cells.erase(dst);
+    cells.insert(std::pair<coordinates, p_piece >(dst, cells.at(src)));
+    cells.erase(src);
+
+    cells.at(dst)->move_to(dst);
     return true;
 }
 
@@ -57,16 +50,15 @@ set<coordinates> field::get_attack_cells(const coordinates src) const
 }
 
 
-shared_ptr<piece> field::get_piece(coordinates src) const
+p_piece field::get_piece(coordinates src) const
 {
-    return get_cells()[src.x()][src.y()].get_piece();
+    return (cells.count(src) > 0) ? cells.at(src) : nullptr;
 }
 
 
-void field::init_cell(coordinates c, shared_ptr<piece> p)
+void field::init_cell(coordinates c, p_piece p)
 {
-    get_cell(c).get_piece() = p;
-    get_cell(c).set_position(c);
+    cells.insert(std::pair<coordinates, p_piece>(c, p));
 }
 
 
@@ -164,11 +156,12 @@ sets_of_movement field::check_horse(const coordinates curr, const set<coordinate
     return result;
 }
 
-
+/*
 cell &field::get_cell(coordinates c)
 {
     return cells[c.x()][c.y()];
 }
+*/
 
 
 cell_table field::get_cells() const
