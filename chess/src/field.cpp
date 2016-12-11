@@ -156,19 +156,6 @@ sets_of_movement field::check_horse(const coordinates curr, const set<coordinate
     return result;
 }
 
-/*
-cell &field::get_cell(coordinates c)
-{
-    return cells[c.x()][c.y()];
-}
-*/
-
-
-cell_table field::get_cells() const
-{
-    return cells;
-}
-
 
 sets_of_movement field::check_one_line(sets_of_movement sets,
         bool (*condition)(int &, int &),
