@@ -20,7 +20,6 @@ QMAKE_CXXFLAGS += -std=c++0x
 SOURCES += main.cpp \
     UI/src/mainwindow.cpp \
     UI/src/myview.cpp \
-    chess/src/test_game.cpp \
     chess/src/game.cpp \
     chess/src/field.cpp \
     chess/src/coordinates.cpp \
@@ -36,7 +35,6 @@ SOURCES += main.cpp \
 
 HEADERS  += UI/headers/mainwindow.h \
     UI/headers/myview.h \
-    chess/headers/test_game.h \
     chess/headers/game.h \
     chess/headers/field.h \
     chess/headers/coordinates.h \
