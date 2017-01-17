@@ -15,6 +15,7 @@ INCLUDEPATH += chess/headers/
 INCLUDEPATH += chess/
 INCLUDEPATH += UI/headers/
 
+QMAKE_CXXFLAGS += -std=c++0x
 
 SOURCES += main.cpp \
     UI/src/mainwindow.cpp \
