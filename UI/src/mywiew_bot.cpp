@@ -2,7 +2,9 @@
 #include <QMouseEvent>
 #include<QGraphicsItem>
 #include <cstdlib>
+#include <QMessageBox>
 #include <ctime>
+#include <QString>
 
 
 void MyView_bot::mousePressEvent(QMouseEvent *e)
@@ -40,6 +42,13 @@ void MyView_bot::mousePressEvent(QMouseEvent *e)
                 }
                 pieces.erase(p);
             }
+
+            QMessageBox msg;
+            msg.setText(QString(current_game->get_current_player_color() == game::white
+                                ? tr("White")
+                                : tr("Black")) +"Lose");
+            msg.setWindowTitle("Win!");
+            msg.exec();
 
         }
     }

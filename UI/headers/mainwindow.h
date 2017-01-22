@@ -23,6 +23,10 @@ private slots:
     void data_changed(game::color);
     void under_check(QString);
 
+    void on_actionMultiplayer_triggered();
+
+    void on_actionWith_computer_triggered();
+
 private:
     Ui::MainWindow *ui;
     MyView* view;
