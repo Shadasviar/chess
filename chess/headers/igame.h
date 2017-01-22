@@ -12,13 +12,16 @@ using std::set;
 class Igame
 {
 public:
+
+    enum color{white, black};
+
     Igame(){}
     virtual bool move(const coordinates src, const coordinates dst) = 0;
     virtual set<coordinates> get_move_cells(const coordinates src) = 0;
     virtual set<coordinates> get_attack_cells(const coordinates src) = 0;
+    virtual set<coordinates> get_pieces_of_player(const color) = 0;
     virtual bool current_player_is_under_check() =0;
 
-    enum color{white, black};
     virtual color get_current_player_color() = 0;
 
     virtual ~Igame() {}

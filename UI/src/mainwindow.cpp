@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->board->setFixedSize(MyView::CELLS_NUM*MyView::CELL_SIZE, MyView::CELLS_NUM*MyView::CELL_SIZE);
-    view = new MyView(ui->board);
+    view = new MyView_bot(ui->board);
 
     QObject::connect(view, SIGNAL(data_changed(game::color)), this, SLOT(data_changed(game::color)));
     QObject::connect(view, SIGNAL(under_check(QString)), this, SLOT(under_check(QString)));

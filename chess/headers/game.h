@@ -18,10 +18,11 @@ public:
     set<coordinates> get_move_cells(const coordinates src) override;
     set<coordinates> get_attack_cells(const coordinates src) override;
     bool current_player_is_under_check() override;
+    virtual set<coordinates> get_pieces_of_player(const color) override;
 
     Igame::color get_current_player_color()override {return (current_player->color == piece::white)? white : black;}
 
-private:
+protected:
     void switch_player(){current_player = (current_player->color == piece::white)
                 ? &players[piece::black] : &players[piece::white];}
 
@@ -30,6 +31,9 @@ private:
     player players[PLAYERS_NUM] = {player(piece::white), player(piece::black)};
     player* current_player;
     field current_field;
+
+private:
+    piece::player_color to_player_color(const color);
 };
 
 #endif // GAME_H

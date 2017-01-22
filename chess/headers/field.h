@@ -1,7 +1,6 @@
 #ifndef FIELD_H
 #define FIELD_H
 #include"coordinates.h"
-//#include "cell.h"
 #include <set>
 #include <tuple>
 #include <map>

@@ -23,12 +23,13 @@ signals:
     void data_changed(game::color);
     void under_check(QString);
 
-private:
+protected:
     void set_img(int i, int j, const QString src);
     QGraphicsScene* init_scene();
     void highlight_moves(QPointF);
     void move(const coordinates src, const coordinates dst);
     void clear_selection();
+    bool try_move(const coordinates src, const coordinates dst);
 
     static QPointF to_qpointf(const coordinates& c);
     static coordinates to_coordinates(const QPointF& p);

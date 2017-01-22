@@ -101,6 +101,16 @@ bool game::current_player_is_under_check()
 }
 
 
+set<coordinates> game::get_pieces_of_player(const Igame::color col)
+{
+    set<coordinates> result;
+    for(auto p : players[to_player_color(col)].pieces){
+        result.insert(p->get_position());
+    }
+    return result;
+}
+
+
 bool game::attack(const coordinates src, const coordinates dst)
 {
     current_field.get_piece(dst)->kill();
@@ -110,4 +120,10 @@ bool game::attack(const coordinates src, const coordinates dst)
         players[piece::black].pieces.erase(current_field.get_piece(dst));
     }
     return current_field.move(src, dst);
+}
+
+
+piece::player_color game::to_player_color(const Igame::color c)
+{
+    return (c == white) ? piece::white : piece::black;
 }

@@ -4,6 +4,7 @@
 #include <QSet>
 #include <QMainWindow>
 #include "myview.h"
+#include "myview_bot.h"
 
 namespace Ui {
 class MainWindow;

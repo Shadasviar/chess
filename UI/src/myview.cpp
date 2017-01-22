@@ -23,21 +23,8 @@ void MyView::mousePressEvent(QMouseEvent *e)
         current_cell = item;
         highlight_moves(item->pos());
     }else{
-        if(current_game->move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()))){
-            move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
-            clear_selection();
-            if(current_game->current_player_is_under_check()){
-                emit under_check("Under check!!!");
-            }
-            else{
-                emit under_check("");
-            }
-            emit data_changed(current_game->get_current_player_color());
-        }else{
-            clear_selection();
-        }
+        try_move(to_coordinates(current_cell->pos()), to_coordinates(item->pos()));
     }
-
 
 }
 
@@ -55,6 +42,26 @@ void MyView::clear_selection()
         delete item;
     }
     selection.clear();
+}
+
+
+bool MyView::try_move(const coordinates src, const coordinates dst)
+{
+    if(current_game->move(src, dst)){
+        move(src, dst);
+        clear_selection();
+        if(current_game->current_player_is_under_check()){
+            emit under_check("Under check!!!");
+        }
+        else{
+            emit under_check("");
+        }
+        emit data_changed(current_game->get_current_player_color());
+        return true;
+    }else{
+        clear_selection();
+        return false;
+    }
 }
 
 

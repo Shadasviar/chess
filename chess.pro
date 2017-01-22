@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     chess/pieces/bishop.cpp \
     chess/pieces/rook.cpp \
     chess/pieces/queen.cpp \
-    chess/pieces/king.cpp
+    chess/pieces/king.cpp \
+    UI/src/mywiew_bot.cpp
 
 HEADERS  += UI/headers/mainwindow.h \
     UI/headers/myview.h \
@@ -47,7 +48,8 @@ HEADERS  += UI/headers/mainwindow.h \
     chess/pieces/rook.h \
     chess/pieces/queen.h \
     chess/pieces/king.h \
-    chess/headers/igame.h
+    chess/headers/igame.h \
+    UI/headers/myview_bot.h
 
 FORMS    += UI/mainwindow.ui
 
