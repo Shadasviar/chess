@@ -113,7 +113,6 @@ set<coordinates> game::get_pieces_of_player(const Igame::color col)
 
 bool game::attack(const coordinates src, const coordinates dst)
 {
-    current_field.get_piece(dst)->kill();
     if(current_field.get_piece(dst)->owner_color() == piece::white){
         players[piece::white].pieces.erase(current_field.get_piece(dst));
     }else{
