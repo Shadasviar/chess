@@ -12,8 +12,6 @@ MyView::MyView(QGraphicsView *parent):
 MyView::~MyView()
 {
     delete current_game;
-    for(auto* p : selection) delete p;
-    delete current_cell;
     delete scene();
 }
 
