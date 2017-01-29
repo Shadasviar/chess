@@ -1,12 +1,14 @@
 #include "myview.h"
 #include <QMouseEvent>
 #include<QGraphicsItem>
+#include<QDesktopWidget>
 
+
+uint MyView::CELL_SIZE = 80;
 
 MyView::MyView(QGraphicsView *parent):
     QGraphicsView(parent),current_cell(nullptr), current_game(new game())
 {
-
 }
 
 MyView::~MyView()

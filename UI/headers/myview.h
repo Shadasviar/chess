@@ -16,7 +16,7 @@ public:
     void mousePressEvent(QMouseEvent * e) override;
     void set_scene(QGraphicsScene * scene);
 
-    static constexpr uint CELL_SIZE = 80;
+    static uint CELL_SIZE;
     static constexpr uint CELLS_NUM = 8;
 
 signals:

@@ -2,12 +2,18 @@
 #include "ui_mainwindow.h"
 #include <QGraphicsItem>
 #include <QGraphicsScene>
+#include <QDesktopWidget>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+    QDesktopWidget widget;
+    QRect rec = widget.availableGeometry(widget.primaryScreen());
+    MyView::CELL_SIZE = rec.height() / 13;
+
     ui->setupUi(this);
     ui->board->setFixedSize(MyView::CELLS_NUM*MyView::CELL_SIZE, MyView::CELLS_NUM*MyView::CELL_SIZE);
     view = new MyView_bot(ui->board);
