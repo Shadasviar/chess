@@ -34,7 +34,7 @@ protected:
     static QPointF to_qpointf(const coordinates& c);
     static coordinates to_coordinates(const QPointF& p);
 
-    QGraphicsPixmapItem* field[8][8];
+    QGraphicsPixmapItem* field[CELLS_NUM][CELLS_NUM];
     QSet<QGraphicsPixmapItem*> selection;
     QGraphicsItem* current_cell;
     Igame* current_game;

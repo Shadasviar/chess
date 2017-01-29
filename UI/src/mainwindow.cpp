@@ -46,29 +46,24 @@ void MainWindow::under_check(QString s)
 }
 
 
+#define REINIT_VIEW(T) \
+    delete view;\
+    view = new T(ui->board);\
+    QObject::connect(view, SIGNAL(data_changed(game::color)), this, SLOT(data_changed(game::color)));\
+    QObject::connect(view, SIGNAL(under_check(QString)), this, SLOT(under_check(QString)));\
+    QGraphicsScene* scene = new QGraphicsScene();\
+    view->set_scene(scene);\
+    view->show();
+
+
 void MainWindow::on_actionMultiplayer_triggered()
 {
-    delete view;
-    view = new MyView(ui->board);
-
-    QObject::connect(view, SIGNAL(data_changed(game::color)), this, SLOT(data_changed(game::color)));
-    QObject::connect(view, SIGNAL(under_check(QString)), this, SLOT(under_check(QString)));
-
-    QGraphicsScene* scene = new QGraphicsScene();
-    view->set_scene(scene);
-    view->show();
+    REINIT_VIEW(MyView);
 }
 
 
 void MainWindow::on_actionWith_computer_triggered()
 {
-    delete view;
-    view = new MyView_bot(ui->board);
-
-    QObject::connect(view, SIGNAL(data_changed(game::color)), this, SLOT(data_changed(game::color)));
-    QObject::connect(view, SIGNAL(under_check(QString)), this, SLOT(under_check(QString)));
-
-    QGraphicsScene* scene = new QGraphicsScene();
-    view->set_scene(scene);
-    view->show();
+    REINIT_VIEW(MyView_bot);
 }
+
