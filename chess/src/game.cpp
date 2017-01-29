@@ -8,45 +8,38 @@
 #include "pieces/queen.h"
 #include "pieces/king.h"
 
-#define INIT_CELL(piece_type, coordinate, color) \
-tmp.reset(new piece_type(coordinate, color));\
-current_field.init_cell(coordinate, tmp);\
-players[color].pieces.insert(current_field.get_piece(coordinate));
-
 
 game::game():Igame(), current_player(&players[piece::white])
 {
-    shared_ptr<piece> tmp;
-
     for(size_t i(0); i < CELLS_NUM; ++i){
-        INIT_CELL(up_pawn, coordinates(i,1), piece::black);
+        INIT_CELL<up_pawn>(coordinates(i,1), piece::black);
     }
     for(size_t i(0); i < CELLS_NUM; ++i){
-        INIT_CELL(down_pawn, coordinates(i,6), piece::white);
+        INIT_CELL<down_pawn>(coordinates(i,6), piece::white);
     }
 
-    INIT_CELL(rook, coordinates(0,7), piece::white);
-    INIT_CELL(rook, coordinates(7,7), piece::white);
-    INIT_CELL(rook, coordinates(0,0), piece::black);
-    INIT_CELL(rook, coordinates(7,0), piece::black);
+    INIT_CELL<rook>(coordinates(0,7), piece::white);
+    INIT_CELL<rook>(coordinates(7,7), piece::white);
+    INIT_CELL<rook>(coordinates(0,0), piece::black);
+    INIT_CELL<rook>(coordinates(7,0), piece::black);
 
-    INIT_CELL(knight, coordinates(1,7), piece::white);
-    INIT_CELL(knight, coordinates(6,7), piece::white);
-    INIT_CELL(knight, coordinates(6,0), piece::black);
-    INIT_CELL(knight, coordinates(1,0), piece::black);
+    INIT_CELL<knight>(coordinates(1,7), piece::white);
+    INIT_CELL<knight>(coordinates(6,7), piece::white);
+    INIT_CELL<knight>(coordinates(6,0), piece::black);
+    INIT_CELL<knight>(coordinates(1,0), piece::black);
 
-    INIT_CELL(bishop, coordinates(2,7), piece::white);
-    INIT_CELL(bishop, coordinates(5,7), piece::white);
-    INIT_CELL(bishop, coordinates(5,0), piece::black);
-    INIT_CELL(bishop, coordinates(2,0), piece::black);
+    INIT_CELL<bishop>(coordinates(2,7), piece::white);
+    INIT_CELL<bishop>(coordinates(5,7), piece::white);
+    INIT_CELL<bishop>(coordinates(5,0), piece::black);
+    INIT_CELL<bishop>(coordinates(2,0), piece::black);
 
-    INIT_CELL(queen, coordinates(3,7), piece::white);
-    INIT_CELL(queen, coordinates(3,0), piece::black);
+    INIT_CELL<queen>(coordinates(3,7), piece::white);
+    INIT_CELL<queen>(coordinates(3,0), piece::black);
 
-    INIT_CELL(king, coordinates(4,7), piece::white);
-    players[piece::white].king = tmp;
-    INIT_CELL(king, coordinates(4,0), piece::black);
-    players[piece::black].king = tmp;
+    INIT_CELL<king>(coordinates(4,7), piece::white);
+    players[piece::white].king = current_field.get_piece({4,7});
+    INIT_CELL<king>(coordinates(4,0), piece::black);
+    players[piece::black].king = current_field.get_piece({4,0});
 }
 
 

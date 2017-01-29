@@ -34,6 +34,12 @@ protected:
 
 private:
     piece::player_color to_player_color(const color);
+
+    template<typename T>
+    void INIT_CELL(coordinates cr, piece::player_color col){
+        current_field.init_cell(cr, p_piece(new T(cr, col)));\
+        players[col].pieces.insert(current_field.get_piece(cr));
+    }
 };
 
 #endif // GAME_H

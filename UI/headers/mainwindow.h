@@ -22,9 +22,7 @@ private slots:
     void on_actionExit_triggered();
     void data_changed(game::color);
     void under_check(QString);
-
     void on_actionMultiplayer_triggered();
-
     void on_actionWith_computer_triggered();
 
 private:
