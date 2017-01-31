@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <ctime>
 #include <QString>
+#include <thread>
 
 
 void MyView_bot::mousePressEvent(QMouseEvent *e)
@@ -31,8 +32,15 @@ void MyView_bot::mousePressEvent(QMouseEvent *e)
                     }
                     moves.erase(dst);
                 }
+                pieces.erase(p);
+            }
 
-                moves = current_game->get_move_cells(*p);
+            pieces = current_game->get_pieces_of_player(current_game->get_current_player_color());
+
+            while(pieces.size() > 0){
+                auto p = std::next(pieces.begin(), std::rand() % pieces.size());
+
+                auto moves = current_game->get_move_cells(*p);
                 while(moves.size() > 0){
                     auto dst = std::next(moves.begin(), std::rand() % moves.size());
                     if(try_move(*p, *dst)){
@@ -43,6 +51,7 @@ void MyView_bot::mousePressEvent(QMouseEvent *e)
                 pieces.erase(p);
             }
 
+            /*show messagebox*/
             QMessageBox msg;
             msg.setText(QString(current_game->get_current_player_color() == game::white
                                 ? tr("White")

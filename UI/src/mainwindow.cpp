@@ -52,6 +52,8 @@ void MainWindow::under_check(QString s)
 }
 
 
+/*It use macro instead of function because in this part of code class MainWindow hasn't exist yet and
+ * function can't find ui->board because forward declaration.*/
 #define REINIT_VIEW(T) \
     delete view;\
     view = new T(ui->board);\

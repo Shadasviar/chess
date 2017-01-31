@@ -4,7 +4,7 @@
 #include "coordinates.h"
 
 
-/*________INTERFACE_____________________*/
+/*______________________INTERFACE_____________________*/
 
 using std::set;
 
